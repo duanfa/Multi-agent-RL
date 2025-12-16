@@ -32,7 +32,7 @@ v  +y
 class GridEnv(gym.Env):
 
     def __init__(self, size: int, target: Union[list, tuple, np.ndarray], forbidden: Union[list, tuple, np.ndarray],
-                 render_mode: str):
+                 render_mode: str,reward_list: List[float] = [0, 1, -10, -10]):
         """
         GridEnv 的构造函数
         :param size: grid_world 的边长
@@ -60,7 +60,8 @@ class GridEnv(gym.Env):
         # self.reward_list = [0, 1, -1, -10]
         # self.reward_list = [-1, 0, -10, -10] #chapter7
         # self.reward_list = [0, 1, -1, -1]  #reward list for TD linear
-        self.reward_list = [0, 1, -10, -10]  # reward list chapter8
+        # self.reward_list = [0, 1, -10, -10]  # reward list chapter8
+        self.reward_list = reward_list  # reward list chapter8
         self.observation_space = spaces.Dict(
             {
                 "agent": spaces.Box(low = 0, high = size - 1, shape=(2,), dtype=int),
