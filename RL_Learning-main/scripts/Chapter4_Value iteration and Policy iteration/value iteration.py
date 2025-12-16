@@ -7,8 +7,10 @@ from torch.utils import data
 from torch.utils.tensorboard import SummaryWriter  # 导入SummaryWriter
 
 # 引用上级目录
+import os
 import sys
-sys.path.append("..")
+# Use absolute path to ensure correct import regardless of execution directory
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import grid_env
 
 
