@@ -5,7 +5,8 @@ from torch.utils.tensorboard import SummaryWriter  # 导入SummaryWriter
 
 # 引用上级目录
 import sys
-sys.path.append("..")
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import grid_env
 
 from tqdm import tqdm
@@ -202,7 +203,7 @@ if __name__ == "__main__":
         gird_world.plot_title("Episode_length = "+str(i))
         gird_world.render()
         # gird_world.render_clear()
-        print("--------------------")
+        print("---------"+str(i)+"-----------")
 
 
 

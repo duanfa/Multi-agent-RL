@@ -43,7 +43,7 @@ class class_value_iteration():
         print("self.reward_space_size:{},self.reward_list:{}".format(self.reward_space_size,self.reward_list))
         print('----------------------------------------------------------------')
 
-    def value_iteration_new(self, tolerance=0.001, steps=100, save_images=False):
+    def value_iteration(self, tolerance=0.001, steps=100, save_images=False):
         """
         迭代求解最优贝尔曼公式 得到 最优state value tolerance 和 steps 满足其一即可
         :param tolerance: 当 前后 state_value 的范数小于tolerance 则认为state_value 已经收敛
@@ -310,7 +310,7 @@ if __name__ == "__main__":
 
     # 执行值迭代算法，启用图片保存
     demand_step = 1000
-    remaining_steps = solver.value_iteration_new(tolerance=0.1, steps=demand_step, save_images=True)
+    remaining_steps = solver.value_iteration(tolerance=0.1, steps=demand_step, save_images=True)
     if remaining_steps > 0:
         print("Value iteration converged in {} steps.".format(demand_step - remaining_steps))
     else:

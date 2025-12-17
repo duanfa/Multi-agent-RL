@@ -144,6 +144,14 @@ class Render:
 
         self.trajectory.append([tuple(pos), action, tuple(next_pos)])
 
+    def plot_title(self, title: str = "Title") -> None:
+        """
+        为图形设置标题
+        :param title: 标题文本
+        :return: None
+        """
+        self.ax.set_title(title, fontsize=20, pad=20)
+    
     def show_frame(self, t: float = 0.2) -> None:
         """
         显示figure 持续一段时间后 关闭
