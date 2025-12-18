@@ -106,11 +106,11 @@ class GridEnv(gym.Env):
         info = self.get_info()
         return observation, reward, terminated, False, info
 
-    def render(self) -> Optional[Union[RenderFrame, List[RenderFrame]]]:
+    def render(self,show_frame_time: float = 1) -> Optional[Union[RenderFrame, List[RenderFrame]]]:
         if self.render_mode == "video":
             self.render_.save_video('image/' + str(time.time()))
 
-        self.render_.show_frame(0.3)
+        self.render_.show_frame(show_frame_time)
         return None
     def render_clear(self):
         self.render_.close_frame()

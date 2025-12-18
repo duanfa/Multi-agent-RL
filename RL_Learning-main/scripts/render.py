@@ -159,6 +159,7 @@ class Render:
         :return: None
         """
         self.fig.show()
+        plt.pause(t) 
 
     def save_frame(self, name: str) -> None:
         """
@@ -233,11 +234,13 @@ class Render:
 
 if __name__ == '__main__':
     render = Render(target=[4, 4], forbidden=[np.array([1, 2]), np.array([2, 2])], size=5)
-    render.draw_action(pos=[3, 3], toward=(0, 0.4))
+    render.draw_action(pos=[3, 3], toward=(0, 0.1))
     # render.save_frame('test1')
 
     for num in range(10):
-        render.draw_random_line(pos1=[1.5, 1.5], pos2=[1.5, 2.5])
+        render.draw_random_line(pos1=[1, 1], pos2=[1.5, 2.5])
+    for num in range(100):
+        render.draw_random_line(pos1=[3, 3], pos2=[4.5, 4.5])
 
     action_to_direction = {
         0: np.array([-1, 0]),

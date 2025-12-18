@@ -152,10 +152,10 @@ class MC_Basic:
         :param length: 每一个 state-action 对的长度
         """
         num_episode = 5
-        episodes = []
         for epoch in range(epochs):
             for state in tqdm(range(self.state_space_size), desc = f"Epoch {epoch}/{epochs}"):
                 for action in range(self.action_space_size):
+                    episodes = []  # 每个(state, action)对都初始化一个新的episodes列表
                     # Collect sufficiently many episodes starting from (s, a) by following πk
                     for tmp in range(num_episode):  # 对每个action 采集 10条 episode
                         episodes.append(self.obtain_episode(self.policy, state, action, length))
@@ -165,9 +165,8 @@ class MC_Basic:
                         sum_qvalue = 0
                         for i in range(len(each_episode)):
                             sum_qvalue += (self.gama ** i) * each_episode[i]['reward']
-                    sum_qvalue_list.append(sum_qvalue)
-                    self.qvalue[state][action] = np.mean(
-                        sum_qvalue_list)  # the average return of all the episodes starting from (s, a)
+                        sum_qvalue_list.append(sum_qvalue)  # 修正缩进：在 for each_episode 循环内
+                    self.qvalue[state][action] = np.mean(sum_qvalue_list)  # the average return of all the episodes starting from (s, a)
                     # self.qvalue[state][action] = np.sum(sum_qvalue_list)/num_episode
                 # Policy improvement:
                 max_index = np.argmax(self.qvalue[state])
@@ -201,7 +200,10 @@ if __name__ == "__main__":
         solver.show_policy()  # solver.env.render()
         solver.show_state_value(solver.state_value, y_offset=0.25)
         gird_world.plot_title("Episode_length = "+str(i))
-        gird_world.render()
+        gird_world.render(show_frame_time=1)
+        # INSERT_YOUR_CODE
+        # 保存当前绘制的图形为图片
+        gird_world.render_.fig.savefig(f"mc_basic_episode_length_{i}.png")
         # gird_world.render_clear()
         print("---------"+str(i)+"-----------")
 
