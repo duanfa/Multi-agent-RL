@@ -5,7 +5,8 @@ from torch.utils.tensorboard import SummaryWriter  # 导入SummaryWriter
 
 # 引用上级目录
 import sys
-sys.path.append("..")
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import grid_env
 
 
@@ -163,6 +164,7 @@ if __name__ == "__main__":
     solver.show_policy()  # solver.env.render()
     solver.show_state_value(solver.state_value, y_offset=0.25)
     gird_world.plot_title("Episode_length = " + str(episode_length))
+    gird_world.render_.save_frame('mc_exploring_starts_first_visit')
     gird_world.render()
     # gird_world.render_clear()
     print("--------------------")
