@@ -47,15 +47,19 @@ class MC_Exploring_Starts:
                 policy = self.policy[state, action]
                 self.env.render_.draw_action(pos=self.env.state2pos(state),
                                              toward=policy * 0.4 * self.env.action_to_direction[action],
-                                             radius=policy * 0.1)
+                                             radius=policy * 0.1,
+                                             color='palegreen')  # 使用浅绿色
 
-    def show_state_value(self, state_value, y_offset=0.2):
+    def show_state_value(self, state_value, x_offset=0.25, y_offset=0.25):
         for state in range(self.state_space_size):
-            self.env.render_.write_word(pos=self.env.state2pos(state), word=str(round(state_value[state], 1)),
+            pos = self.env.state2pos(state)
+            self.env.render_.write_word(pos=(pos[0] + x_offset, pos[1]),
+                                        word=str(round(state_value[state], 1)),
                                         y_offset=y_offset,
-                                        size_discount=0.7)
+                                        size_discount=0.7,
+                                        fontweight='bold')
     
-    def show_qvalue(self, qvalue, size_discount=0.4):
+    def show_qvalue(self, qvalue, size_discount=0.6):
         """
         显示每个状态下所有动作的Q值
         :param qvalue: Q值表 shape=(state_space_size, action_space_size)
@@ -108,11 +112,11 @@ class MC_Exploring_Starts:
         
         # 绘制策略、状态值和Q值
         self.show_policy()
-        self.show_state_value(self.state_value, y_offset=0.25)
-        self.show_qvalue(qvalue, size_discount=0.35)  # 显示每个动作的Q值
+        self.show_state_value(self.state_value, x_offset=0.25, y_offset=0.25)  # 显示在右下角
+        self.show_qvalue(qvalue, size_discount=0.6)  # 显示每个动作的Q值，增大字体
         self.env.plot_title(title)
         self.env.render_.save_frame(savePath)
-        # self.env.render(show_frame_time=0.01)
+        self.env.render(show_frame_time=0.01)
         # print("--------------------------------")
 
     def obtain_episode(self, policy, start_state, start_action, length):
@@ -236,8 +240,8 @@ if __name__ == "__main__":
     print("episode_length:{} that the cost_time is:{}".format(episode_length, round(cost_time, 2)))
 
     solver.show_policy()  # solver.env.render()
-    solver.show_state_value(solver.state_value, y_offset=0.25)
-    solver.show_qvalue(solver.qvalue, size_discount=0.35)  # 显示最终的Q值
+    solver.show_state_value(solver.state_value, x_offset=0.25, y_offset=0.25)  # 显示在右下角
+    solver.show_qvalue(solver.qvalue, size_discount=0.6)  # 显示最终的Q值，增大字体
     gird_world.plot_title("Episode_length = " + str(episode_length) + " (Final)")
     gird_world.render_.save_frame('mc_exploring_starts_first_visit_final')
     gird_world.render(show_frame_time=0.1)

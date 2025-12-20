@@ -95,7 +95,7 @@ class Render:
             patches.Circle((pos[0] + 0.5, pos[1] + 0.5),
                            radius=radius,
                            facecolor=color,
-                           edgecolor='green',
+                           edgecolor=color,
                            linewidth=2,
                            fill=fill
                            ))
@@ -116,10 +116,10 @@ class Render:
                               dy=toward[1], color=color, width=0.05 + 0.05 * np.linalg.norm(np.array(toward) / 0.5),
                               linewidth=0.5))
         else:
-            self.draw_circle(pos=tuple(pos), color='white', radius=radius, fill=False)
+            self.draw_circle(pos=tuple(pos), color=color, radius=radius, fill=False)
 
     def write_word(self, pos: Union[list, np.ndarray, tuple], word: str, color: str = 'black', y_offset: float = 0,
-                   size_discount: float = 1.0) -> None:
+                   size_discount: float = 1.0, fontweight: str = 'normal') -> None:
         """
         在网格上对应位置写字
         :param pos: 需要写字的格子的左下角坐标
@@ -127,10 +127,11 @@ class Render:
         :param color: 字的颜色
         :param y_offset: 字在y方向上关于网格中心的偏移
         :param size_discount: 字体大小 (0-1)
+        :param fontweight: 字体粗细 ('normal', 'bold', 'heavy', 'light', 'ultrabold', 'ultralight')
         :return: None
         """
         self.ax.text(pos[0] + 0.5, pos[1] + 0.5 + y_offset, word, size=size_discount * (30 - 2 * self.size), ha='center',
-                 va='center', color=color)
+                 va='center', color=color, fontweight=fontweight)
 
     def upgrade_agent(self, pos: Union[list, np.ndarray, tuple], action,
                       next_pos: Union[list, np.ndarray, tuple], ) -> None:
