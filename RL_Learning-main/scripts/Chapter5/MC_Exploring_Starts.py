@@ -61,14 +61,14 @@ class MC_Exploring_Starts:
         :param qvalue: Q值表 shape=(state_space_size, action_space_size)
         :param size_discount: 字体大小折扣
         """
-        # action_to_direction 对应: 0:左, 1:下, 2:右, 3:上, 4:停
+        # action_to_direction 对应: 0:上, 1:右, 2:下, 3:左, 4:停
         # 我们在格子的四个角落显示对应方向的Q值
         offset_map = {
-            0: (-0.35, 0),      # 左
-            1: (0, 0.35),       # 下
-            2: (0.35, 0),       # 右
-            3: (0, -0.35),      # 上
-            4: (0, 0)           # 停（中心偏下）
+            0: (0, -0.35),      # 上
+            1: (0.35, 0),       # 右
+            2: (0, 0.35),       # 下
+            3: (-0.35, 0),      # 左
+            4: (0, 0)           # 停（中心）
         }
         
         for state in range(self.state_space_size):
@@ -187,6 +187,7 @@ class MC_Exploring_Starts:
                     episode = self.obtain_episode(policy=self.policy, start_state=start_state, start_action=start_action,
                                                   length=length)
                     for step in range(len(episode)-1, -1, -1):  #从末尾开始截取
+                        print(f"episode[{step}]:",episode[step])
                         reward = episode[step]['reward']
                         state = episode[step]['state']
                         action = episode[step]['action']
